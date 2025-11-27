@@ -1,55 +1,33 @@
 package com.shadeslayer.model;
 
-public class Item {
-    private String description;
-    private String name;
-    private String location;
-    private int id;
-    private boolean isVisible;
+public abstract class Item extends Usable {
+    private int durability;
+    private final int maxDurability;
 
     public Item(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.isVisible = true;
+        super(name, description);
+        this.durability = 100;
+        this.maxDurability = 100;
     }
 
-    public String getDescription() {
-        return description;
+    public Item(String name, String description, int durability, int placability) {
+        super(name, description);
+        this.durability = durability;
+        this.maxDurability = placability;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getDurability() {
+        return durability;
     }
 
-    public String getName() {
-        return name;
+    public void setDurability(int durability) {
+        this.durability = durability;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getMaxDurability() {
+            return maxDurability;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
+    @Override
+    public abstract void onUse(Player player);
 }
