@@ -4,35 +4,56 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Room {
+    private final String id;
+    private final String name;
     private final String description;
-    private final Map<String, Room> exits; // Map direction to neighboring Room
-
-    public Room(String description) {
+    private final Map<Direction, String> exits; // Maps directions to room IDs
+    // TODO: Add items and NPCs later
+    public Room(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
         this.description = description;
-        exits = new HashMap<>();
+        this.exits = new HashMap<>();
     }
 
-    public String getDescription() {
+    public Room(String id, String name, String description, Map<Direction, String> exits) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.exits = exits;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRoomDescription() {
         return description;
     }
 
-    public void setExit(String direction, Room neighbor) {
-        exits.put(direction, neighbor);
+    public String getFullDescription() {
+        return "You are " + description + ".\nExits: " + getExitsList();
     }
 
-    public Room getExit(String direction) {
+    public void setExit(Direction direction, String neighbouringRoomId) {
+        exits.put(direction, neighbouringRoomId);
+    }
+
+    public String getExitId(Direction direction) {
         return exits.get(direction);
     }
 
-    public String getExitString() {
-        StringBuilder sb = new StringBuilder();
-        for (String direction : exits.keySet()) {
-            sb.append(direction).append(" ");
+    public String getExitsList() {
+        StringBuilder exitList = new StringBuilder();
+        for (Direction dir : exits.keySet()) {
+            exitList.append(dir.toString()).append(" ");
         }
-        return sb.toString().trim();
+        return exitList.toString().trim();
     }
 
-    public String getLongDescription() {
-        return "You are " + description + ".\nExits: " + getExitString();
-    }
+
 }

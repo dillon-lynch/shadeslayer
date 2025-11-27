@@ -1,44 +1,14 @@
 package com.shadeslayer;
 
 import com.shadeslayer.controller.Parser;
-import com.shadeslayer.model.Character;
 import com.shadeslayer.model.Command;
-import com.shadeslayer.model.Room;
+import com.shadeslayer.model.Player;
 public class Main {
     private final Parser parser;
-    private Character player;
+    private Player player;
 
     public Main() {
-        createRooms();
         parser = new Parser();
-    }
-
-    private void createRooms() {
-        Room outside, theatre, pub, lab, office;
-
-        // create rooms
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-
-        // initialise room exits
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
-
-        theatre.setExit("west", outside);
-
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        // create the player character and start outside
-        player = new Character("player", outside);
     }
 
     public void play() {
@@ -57,7 +27,6 @@ public class Main {
         System.out.println("Welcome to the University adventure!");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
     private boolean processCommand(Command command) {
@@ -73,7 +42,7 @@ public class Main {
                 printHelp();
                 break;
             case "go":
-                goRoom(command);
+                // goRoom(command); TODO: Implement goRoom method
                 break;
             case "quit":
                 if (command.hasSecondWord()) {
@@ -95,23 +64,6 @@ public class Main {
         parser.showCommands();
     }
 
-    private void goRoom(Command command) {
-        if (!command.hasSecondWord()) {
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        Room nextRoom = player.getCurrentRoom().getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
-            player.setCurrentRoom(nextRoom);
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        }
-    }
 
     public static void main(String[] args) {
         Main game = new Main();
