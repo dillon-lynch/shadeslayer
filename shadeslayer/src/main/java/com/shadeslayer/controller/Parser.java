@@ -1,5 +1,8 @@
-package com.shadeslayer;
+package com.shadeslayer.controller;
 
+
+import com.shadeslayer.model.Command;
+import com.shadeslayer.model.CommandWords;
 import java.util.Scanner;
 
 public class Parser {

@@ -1,4 +1,4 @@
-package com.shadeslayer;
+package com.shadeslayer.model;
 
 public class Item {
     private String description;

@@ -1,20 +1,9 @@
 package com.shadeslayer;
 
-/* This game is a classic text-based adventure set in a university environment.
-   The player starts outside the main entrance and can navigate through different rooms like a 
-   lecture theatre, campus pub, computing lab, and admin office using simple text commands (e.g., "go east", "go west").
-    The game provides descriptions of each location and lists possible exits.
-
-Key features include:
-Room navigation: Moving among interconnected rooms with named exits.
-Simple command parser: Recognizes a limited set of commands like "go", "help", and "quit".
-Player character: Tracks current location and handles moving between rooms.
-Text descriptions: Provides immersive text output describing the player's surroundings and available options.
-Help system: Lists valid commands to guide the player.
-Overall, it recreates the classic Zork interactive fiction experience with a university-themed setting, 
-emphasizing exploration and simple command-driven gameplay
-*/
-
+import com.shadeslayer.controller.Parser;
+import com.shadeslayer.model.Character;
+import com.shadeslayer.model.Command;
+import com.shadeslayer.model.Room;
 public class Main {
     private final Parser parser;
     private Character player;

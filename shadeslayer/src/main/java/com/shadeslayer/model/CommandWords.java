@@ -1,4 +1,4 @@
-package com.shadeslayer;
+package com.shadeslayer.model;
 
 import java.util.HashMap;
 import java.util.Map;
