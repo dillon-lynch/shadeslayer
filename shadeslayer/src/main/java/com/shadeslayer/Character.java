@@ -1,5 +1,9 @@
+package com.shadeslayer;
+
+
+
 public class Character {
-    private String name;
+    private final String name;
     private Room currentRoom;
 
     public Character(String name, Room startingRoom) {

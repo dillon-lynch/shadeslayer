@@ -1,3 +1,5 @@
+package com.shadeslayer;
+
 /* This game is a classic text-based adventure set in a university environment.
    The player starts outside the main entrance and can navigate through different rooms like a 
    lecture theatre, campus pub, computing lab, and admin office using simple text commands (e.g., "go east", "go west").
@@ -13,13 +15,11 @@ Overall, it recreates the classic Zork interactive fiction experience with a uni
 emphasizing exploration and simple command-driven gameplay
 */
 
-import java.util.Scanner;
-
-public class ZorkULGame {
-    private Parser parser;
+public class Main {
+    private final Parser parser;
     private Character player;
 
-    public ZorkULGame() {
+    public Main() {
         createRooms();
         parser = new Parser();
     }
@@ -125,7 +125,7 @@ public class ZorkULGame {
     }
 
     public static void main(String[] args) {
-        ZorkULGame game = new ZorkULGame();
+        Main game = new Main();
         game.play();
     }
 }

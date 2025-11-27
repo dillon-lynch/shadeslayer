@@ -1,9 +1,11 @@
+package com.shadeslayer;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Room {
-    private String description;
-    private Map<String, Room> exits; // Map direction to neighboring Room
+    private final String description;
+    private final Map<String, Room> exits; // Map direction to neighboring Room
 
     public Room(String description) {
         this.description = description;

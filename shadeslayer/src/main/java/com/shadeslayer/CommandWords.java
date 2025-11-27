@@ -1,8 +1,10 @@
+package com.shadeslayer;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandWords {
-    private Map<String, String> validCommands;
+    private final Map<String, String> validCommands;
 
     public CommandWords() {
         validCommands = new HashMap<>();
