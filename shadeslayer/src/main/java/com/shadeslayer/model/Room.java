@@ -10,13 +10,14 @@ public class Room {
     private final String description;
     private final Map<Direction, Exit> exitsMap;
     private final List<Item> items;
-    // TODO: Add NPCs later
+    private final List<NPC> npcs;
     
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
         this.exitsMap = new HashMap<>();
         this.items = new ArrayList<>();
+        this.npcs = new ArrayList<>();
     }
 
     public Room(String name, String description, Map<Direction, Exit> exits) {
@@ -24,6 +25,7 @@ public class Room {
         this.description = description;
         this.exitsMap = exits;
         this.items = new ArrayList<>();
+        this.npcs = new ArrayList<>();
     }
 
     public String getName() {
@@ -43,6 +45,14 @@ public class Room {
             sb.append("Items: ");
             for (Item item : items) {
                 sb.append(item.getName()).append(" ");
+            }
+            sb.append("\n");
+        }
+        
+        if (!npcs.isEmpty()) {
+            sb.append("NPCs: ");
+            for (NPC npc : npcs) {
+                sb.append(npc.getName()).append(" ");
             }
             sb.append("\n");
         }
@@ -90,5 +100,30 @@ public class Room {
 
     public boolean hasItem(String name) {
         return getItemByName(name) != null;
+    }
+
+    public void addNPC(NPC npc) {
+        npcs.add(npc);
+    }
+
+    public boolean removeNPC(NPC npc) {
+        return npcs.remove(npc);
+    }
+
+    public NPC getNPCByName(String name) {
+        for (NPC npc : npcs) {
+            if (npc.getName().equalsIgnoreCase(name)) {
+                return npc;
+            }
+        }
+        return null;
+    }
+
+    public List<NPC> getNPCs() {
+        return new ArrayList<>(npcs);
+    }
+
+    public boolean hasNPC(String name) {
+        return getNPCByName(name) != null;
     }
 }

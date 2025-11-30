@@ -10,10 +10,10 @@ public abstract class Item extends Usable {
         this.maxDurability = 100;
     }
 
-    public Item(String name, String description, int durability, int placability) {
+    public Item(String name, String description, int durability, int maxDurability) {
         super(name, description);
         this.durability = durability;
-        this.maxDurability = placability;
+        this.maxDurability = maxDurability;
     }
 
     public int getDurability() {
