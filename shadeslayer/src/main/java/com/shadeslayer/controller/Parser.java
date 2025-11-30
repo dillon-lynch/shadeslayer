@@ -1,42 +1,61 @@
 package com.shadeslayer.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import com.shadeslayer.model.Command;
 import com.shadeslayer.model.CommandWords;
-import java.util.Scanner;
+import com.shadeslayer.model.ParsedCommand;
 
-public class Parser {
-    private final CommandWords commands;
-    private final Scanner reader;
+public final class Parser {
 
-    public Parser() {
-        commands = new CommandWords();
-        reader = new Scanner(System.in);
+    // This constructor is private to prevent the class from being instantiated
+    private Parser() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
-    public Command getCommand() {
-        System.out.print("> ");
-        String inputLine = reader.nextLine();
+    public static ParsedCommand getParsedCommand(String input) {
+        String commandWord = getCommandWord(input);
+        List<String> arguments = getArguments(input);
 
-        String word1 = null;
-        String word2 = null;
-
-        Scanner tokenizer = new Scanner(inputLine);
-        if (tokenizer.hasNext()) {
-            word1 = tokenizer.next();
-            if (tokenizer.hasNext()) {
-                word2 = tokenizer.next();
-            }
+        if (commandWord == null) {
+            return new ParsedCommand(null, arguments, "No command entered.");
         }
 
-        if (commands.isCommand(word1)) {
-            return new Command(word1, word2);
-        } else {
-            return new Command(null, word2);
+        Command command = CommandWords.getCommand(commandWord);
+        if (command == null) {
+            return new ParsedCommand(null, arguments, "Unknown command: '" + commandWord + "'");
         }
+
+        return new ParsedCommand(command, arguments, null);
     }
 
-    public void showCommands() {
-        commands.showAll();
+
+    public static String getCommandWord(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return null;
+        }
+        String[] tokens = input.trim().split(" ");
+        return tokens[0].toLowerCase();
+    }
+
+    public static List<String> getArguments(String input) {
+        List<String> arguments = new ArrayList<>();
+        if (input == null || input.trim().isEmpty()) {
+            return arguments;
+        }
+        
+        String[] tokens = input.trim().split(" ");
+        for (int i = 1; i < tokens.length; i++) {
+            arguments.add(tokens[i].toLowerCase());
+        }
+        return arguments;
+    }
+
+    public static void showCommands() {
+        System.out.println("Available commands:");
+        CommandWords.getAllCommandsWithDescriptions().forEach((cmd, desc) -> 
+            System.out.println("  " + cmd + " - " + desc)
+        );
     }
 }

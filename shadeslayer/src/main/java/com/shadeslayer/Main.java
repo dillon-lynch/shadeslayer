@@ -1,69 +1,63 @@
 package com.shadeslayer;
 
+import java.util.Scanner;
+
 import com.shadeslayer.controller.Parser;
-import com.shadeslayer.model.Command;
 import com.shadeslayer.model.Player;
+
 public class Main {
-    private final Parser parser;
-    private Player player;
+    private final Player player;
+    private final Scanner scanner;
 
     public Main() {
-        parser = new Parser();
+        this.player = new Player("Test");
+        this.scanner = new Scanner(System.in);
     }
 
     public void play() {
         printWelcome();
 
         boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
+        //TODO: Implement game loop
+        // while (!finished) {
+        //     System.out.print("> ");
+        //     String input = scanner.nextLine();
+            
+        //     ParsedCommand parsed = Parser.getParsedCommand(input);
+            
+        //     if (!parsed.isValid()) {
+        //         System.out.println(parsed.getError());
+        //         continue;
+        //     }
+            
+        //     ParsedCommand parsedCommand = Parser.getParsedCommand(input);
+        // }
+        
+        scanner.close();
         System.out.println("Thank you for playing. Goodbye.");
     }
 
+
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to the University adventure!");
+        System.out.println("Welcome to Shadeslayer!");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
     }
 
-    private boolean processCommand(Command command) {
-        String commandWord = command.getCommandWord();
-
-        if (commandWord == null) {
-            System.out.println("I don't understand your command...");
-            return false;
-        }
-
-        switch (commandWord) {
-            case "help":
-                printHelp();
-                break;
-            case "go":
-                // goRoom(command); TODO: Implement goRoom method
-                break;
-            case "quit":
-                if (command.hasSecondWord()) {
-                    System.out.println("Quit what?");
-                    return false;
-                } else {
-                    return true; // signal to quit
-                }
-            default:
-                System.out.println("I don't know what you mean...");
-                break;
-        }
-        return false;
-    }
-
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander around the university.");
-        System.out.print("Your command words are: ");
-        parser.showCommands();
+        System.out.println("You are lost. You are alone. You wander around the dungeon.");
+        System.out.print("Your command words are:\n");
+        Parser.showCommands();
     }
 
+    private void look() {
+        if (player.getCurrentRoom() != null) {
+            System.out.println(player.getCurrentRoom().getFullDescription());
+        } else {
+            System.out.println("You are nowhere.");
+        }
+    }
 
     public static void main(String[] args) {
         Main game = new Main();

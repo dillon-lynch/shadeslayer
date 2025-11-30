@@ -1,27 +1,29 @@
 package com.shadeslayer.model;
 
 public class Command {
-    private final String commandWord;
-    private final String secondWord;
+    private final String name;
+    private final String description;
+    private final ArgumentType argumentType;
 
-    public Command(String firstWord, String secondWord) {
-        this.commandWord = firstWord;
-        this.secondWord = secondWord;
+    public Command(String name, String description, ArgumentType argumentType) {
+        this.name = name;
+        this.description = description;
+        this.argumentType = argumentType;
     }
 
-    public String getCommandWord() {
-        return commandWord;
+    public String getName() {
+        return name;
     }
 
-    public String getSecondWord() {
-        return secondWord;
+    public String getDescription() {
+        return description;
     }
 
-    public boolean isUnknown() {
-        return commandWord == null;
+    public boolean requiresArgument() {
+        return argumentType != ArgumentType.NONE;
     }
 
-    public boolean hasSecondWord() {
-        return secondWord != null;
+    public ArgumentType getArgumentType() {
+        return argumentType;
     }
 }
