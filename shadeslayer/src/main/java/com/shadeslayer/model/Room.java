@@ -10,7 +10,6 @@ public class Room {
     private final String description;
     private final Map<Direction, Exit> exitsMap;
     private final List<Item> items;
-    private final List<Spell> spells;
     // TODO: Add NPCs later
     
     public Room(String name, String description) {
@@ -18,7 +17,6 @@ public class Room {
         this.description = description;
         this.exitsMap = new HashMap<>();
         this.items = new ArrayList<>();
-        this.spells = new ArrayList<>();
     }
 
     public Room(String name, String description, Map<Direction, Exit> exits) {
@@ -26,7 +24,6 @@ public class Room {
         this.description = description;
         this.exitsMap = exits;
         this.items = new ArrayList<>();
-        this.spells = new ArrayList<>();
     }
 
     public String getName() {
@@ -46,14 +43,6 @@ public class Room {
             sb.append("Items: ");
             for (Item item : items) {
                 sb.append(item.getName()).append(" ");
-            }
-            sb.append("\n");
-        }
-        
-        if (!spells.isEmpty()) {
-            sb.append("Spells: ");
-            for (Spell spell : spells) {
-                sb.append(spell.getName()).append(" ");
             }
             sb.append("\n");
         }
@@ -101,31 +90,5 @@ public class Room {
 
     public boolean hasItem(String name) {
         return getItemByName(name) != null;
-    }
-
-    // Spell management
-    public void addSpell(Spell spell) {
-        spells.add(spell);
-    }
-
-    public boolean removeSpell(Spell spell) {
-        return spells.remove(spell);
-    }
-
-    public Spell getSpellByName(String name) {
-        for (Spell spell : spells) {
-            if (spell.getName().equalsIgnoreCase(name)) {
-                return spell;
-            }
-        }
-        return null;
-    }
-
-    public List<Spell> getSpells() {
-        return new ArrayList<>(spells);
-    }
-
-    public boolean hasSpell(String name) {
-        return getSpellByName(name) != null;
     }
 }
