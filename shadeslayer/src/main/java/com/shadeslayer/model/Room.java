@@ -1,11 +1,13 @@
 package com.shadeslayer.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Room {
+public class Room implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final String description;
     private final Map<Direction, Exit> exitsMap;

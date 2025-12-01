@@ -1,6 +1,9 @@
 package com.shadeslayer.model;
 
-public abstract class Spell extends Usable {
+import java.io.Serializable;
+
+public abstract class Spell extends Usable implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int energyCost;
 
     public Spell(String name, String description, int energyCost) {

@@ -1,6 +1,9 @@
 package com.shadeslayer.model;
 
-public abstract class Item extends Usable {
+import java.io.Serializable;
+
+public abstract class Item extends Usable implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int durability;
     private final int maxDurability;
 

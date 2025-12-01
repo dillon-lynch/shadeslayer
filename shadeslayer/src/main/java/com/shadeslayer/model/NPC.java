@@ -1,12 +1,12 @@
 package com.shadeslayer.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-// This class uses Consumer<Player> for onTalk and onAttack to allow custom behavior when these actions are performed.
-// A consumer is a 'function' that takes one argument and returns void.
-public class NPC {
+public class NPC implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final String description;
     private final List<String> dialogue;
