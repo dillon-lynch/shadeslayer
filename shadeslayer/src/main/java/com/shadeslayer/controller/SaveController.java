@@ -63,12 +63,11 @@ public class SaveController {
 
         } catch (IOException e) {
             System.err.println("Failed to save game: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
 
-    public SavePoint load(int saveSlot, String timestamp) {
+    public SavePoint load(int saveSlot, LocalDateTime timestamp) {
         if (saveSlot < 1 || saveSlot > 3) {
             System.err.println("Invalid save slot. Must be 1-3.");
             return null;
@@ -118,7 +117,6 @@ public class SaveController {
                 return saves;
             }
 
-            String pattern = SAVE_FILE_PREFIX + saveSlot + "_*" + SAVE_FILE_EXTENSION;
             List<Path> files = Files.list(slotDir)
                 .filter(path -> path.getFileName().toString().matches(
                     SAVE_FILE_PREFIX + saveSlot + "_.*\\" + SAVE_FILE_EXTENSION))
@@ -211,7 +209,7 @@ public class SaveController {
     private String generateFileName(int saveSlot, LocalDateTime timestamp) {
         String timestampStr = timestamp.toString()
             .replace(":", "-")
-            .replace(".", "-"); // Replace colons and dots for file compatibility
+            .replace(".", "-");
         return SAVE_FILE_PREFIX + saveSlot + "_" + timestampStr + SAVE_FILE_EXTENSION;
     }
 

@@ -1,13 +1,15 @@
 package com.shadeslayer.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SavePoint implements Serializable, Comparable<SavePoint> {
     
     private final int saveSlot;
     private final GameState gameState;
     private final String saveName;
-    private transient String timestamp;
+    private final LocalDateTime timestamp;
 
     public SavePoint(int saveSlot, GameState gameState) {
         this(saveSlot, gameState, null);
@@ -20,18 +22,15 @@ public class SavePoint implements Serializable, Comparable<SavePoint> {
         this.saveSlot = saveSlot;
         this.gameState = gameState;
         this.saveName = saveName != null ? saveName : "Save " + saveSlot;
+        this.timestamp = LocalDateTime.now();
     }
 
     public int getSaveSlot() {
         return saveSlot;
     }
 
-    public String getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public GameState getGameState() {
@@ -43,7 +42,8 @@ public class SavePoint implements Serializable, Comparable<SavePoint> {
     }
 
     public String getDisplayName() {
-        return String.format("[%d] %s - %s", saveSlot, saveName, timestamp);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return String.format("[%d] %s - %s", saveSlot, saveName, timestamp.format(formatter));
     }
 
     @Override
