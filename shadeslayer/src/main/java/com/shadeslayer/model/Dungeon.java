@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Dungeon implements Serializable {
-    private static final long serialVersionUID = 1L;
     private final HashMap<String, Room> rooms;
 
     public Dungeon() {

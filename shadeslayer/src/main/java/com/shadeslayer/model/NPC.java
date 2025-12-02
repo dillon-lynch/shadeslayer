@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class NPC implements Serializable {
-    private static final long serialVersionUID = 1L;
     private final String name;
     private final String description;
     private final List<String> dialogue;

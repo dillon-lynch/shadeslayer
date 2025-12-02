@@ -3,7 +3,6 @@ package com.shadeslayer.model;
 import java.io.Serializable;
 
 public class GameState implements Serializable {
-    private static final long serialVersionUID = 1L;
     
     private final Player player;
     private final Dungeon dungeon;

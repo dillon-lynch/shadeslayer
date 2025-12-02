@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Room implements Serializable {
-    private static final long serialVersionUID = 1L;
     private final String name;
     private final String description;
     private final Map<Direction, Exit> exitsMap;

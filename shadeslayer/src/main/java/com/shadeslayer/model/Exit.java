@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 public class Exit implements Serializable {
-    private static final long serialVersionUID = 1L;
     private final Room targetRoom;
     private final String description;
     private final Predicate<Player> canPassThrough;

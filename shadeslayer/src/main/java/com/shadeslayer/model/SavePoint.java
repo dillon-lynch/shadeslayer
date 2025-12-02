@@ -1,30 +1,23 @@
 package com.shadeslayer.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class SavePoint implements Serializable, Comparable<SavePoint> {
-    private static final long serialVersionUID = 1L;
     
     private final int saveSlot;
-    private final LocalDateTime timestamp;
     private final GameState gameState;
     private final String saveName;
+    private transient String timestamp;
 
     public SavePoint(int saveSlot, GameState gameState) {
-        this(saveSlot, gameState, null, LocalDateTime.now());
+        this(saveSlot, gameState, null);
     }
 
     public SavePoint(int saveSlot, GameState gameState, String saveName) {
-        this(saveSlot, gameState, saveName, LocalDateTime.now());
-    }
-
-    public SavePoint(int saveSlot, GameState gameState, String saveName, LocalDateTime timestamp) {
         if (saveSlot < 1 || saveSlot > 3) {
             throw new IllegalArgumentException("Save slot must be between 1 and 3");
         }
         this.saveSlot = saveSlot;
-        this.timestamp = timestamp;
         this.gameState = gameState;
         this.saveName = saveName != null ? saveName : "Save " + saveSlot;
     }
@@ -33,8 +26,12 @@ public class SavePoint implements Serializable, Comparable<SavePoint> {
         return saveSlot;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public GameState getGameState() {
@@ -46,8 +43,7 @@ public class SavePoint implements Serializable, Comparable<SavePoint> {
     }
 
     public String getDisplayName() {
-        return String.format("[%d] %s - %s", saveSlot, saveName, 
-            timestamp.toString().replace('T', ' ').substring(0, 19));
+        return String.format("[%d] %s - %s", saveSlot, saveName, timestamp);
     }
 
     @Override
