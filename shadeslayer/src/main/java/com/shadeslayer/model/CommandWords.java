@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class CommandWords {
     private static final Map<String, Command> validCommands = new HashMap<>();
@@ -19,17 +18,17 @@ public class CommandWords {
         validCommands.put("help", new Command("help", "Show available commands", ArgumentType.NONE));
         validCommands.put("quit", new Command("quit", "Exit the game", ArgumentType.NONE));
         validCommands.put("inventory", new Command("inventory", "Show your inventory", ArgumentType.NONE));
-        
+
         // Action commands
         validCommands.put("take", new Command("take", "Pick up an item", ArgumentType.ITEM));
         validCommands.put("drop", new Command("drop", "Drop an item", ArgumentType.ITEM));
         validCommands.put("use", new Command("use", "Use an item or spell", ArgumentType.ITEM_OR_SPELL));
         validCommands.put("examine", new Command("examine", "Examine something closely", ArgumentType.TARGET));
-        
+
         // Interaction commands
         validCommands.put("talk", new Command("talk", "Talk to an NPC", ArgumentType.NPC));
         validCommands.put("attack", new Command("attack", "Attack an enemy", ArgumentType.TARGET));
-        
+
         // Insert all commands into the Trie for autocomplete
         for (String command : validCommands.keySet()) {
             commandTrie.insert(command);
@@ -61,10 +60,10 @@ public class CommandWords {
     }
 
     public static Map<String, String> getAllCommandsWithDescriptions() {
-        return validCommands.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().getDescription()
-                ));
+        Map<String, String> descriptions = new HashMap<>();
+        for (Map.Entry<String, Command> entry : validCommands.entrySet()) {
+            descriptions.put(entry.getKey(), entry.getValue().getDescription());
+        }
+        return descriptions;
     }
 }

@@ -1,8 +1,6 @@
 package com.shadeslayer.model;
 
-import java.io.Serializable;
-
-public abstract class Item extends Usable implements Serializable {
+public abstract class Item extends Usable {
     private int durability;
     private final int maxDurability;
 
@@ -12,8 +10,20 @@ public abstract class Item extends Usable implements Serializable {
         this.maxDurability = 100;
     }
 
+    public Item(String name, String description, String imagePath) {
+        super(name, description, imagePath);
+        this.durability = 100;
+        this.maxDurability = 100;
+    }
+
     public Item(String name, String description, int durability, int maxDurability) {
         super(name, description);
+        this.durability = durability;
+        this.maxDurability = maxDurability;
+    }
+
+    public Item(String name, String description, String imagePath, int durability, int maxDurability) {
+        super(name, description, imagePath);
         this.durability = durability;
         this.maxDurability = maxDurability;
     }
@@ -27,7 +37,7 @@ public abstract class Item extends Usable implements Serializable {
     }
 
     public int getMaxDurability() {
-            return maxDurability;
+        return maxDurability;
     }
 
     @Override

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+
+<fx:root type="javafx.scene.control.TitledPane"
+         xmlns="http://javafx.com/javafx/25" 
+         xmlns:fx="http://javafx.com/fxml/1" 
+         fx:controller="com.shadeslayer.view.components.commandpalette.CommandPaletteController"
+         animated="false"
+         expanded="false">
+    <content>
+        <ListView fx:id="optionsList" prefHeight="100.0" />
+    </content>
+</fx:root>

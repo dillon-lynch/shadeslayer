@@ -12,7 +12,7 @@ public class Room implements Serializable {
     private final Map<Direction, Exit> exitsMap;
     private final List<Item> items;
     private final List<NPC> npcs;
-    
+
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
@@ -40,8 +40,16 @@ public class Room implements Serializable {
     public String getFullDescription() {
         StringBuilder sb = new StringBuilder();
         sb.append("You are ").append(description).append(".\n");
-        sb.append("Exits: ").append(getExitsList()).append("\n");
-        
+        sb.append("Exits: ");
+        List<String> exits = getExitsList();
+        for (int i = 0; i < exits.size(); i++) {
+            sb.append(exits.get(i));
+            if (i < exits.size() - 1) {
+                sb.append(" ");
+            }
+        }
+        sb.append("\n");
+
         if (!items.isEmpty()) {
             sb.append("Items: ");
             for (Item item : items) {
@@ -49,7 +57,7 @@ public class Room implements Serializable {
             }
             sb.append("\n");
         }
-        
+
         if (!npcs.isEmpty()) {
             sb.append("NPCs: ");
             for (NPC npc : npcs) {
@@ -57,7 +65,7 @@ public class Room implements Serializable {
             }
             sb.append("\n");
         }
-        
+
         return sb.toString().trim();
     }
 
@@ -69,12 +77,12 @@ public class Room implements Serializable {
         return exitsMap.get(direction);
     }
 
-    public String getExitsList() {
-        StringBuilder exitList = new StringBuilder();
+    public List<String> getExitsList() {
+        List<String> exitList = new ArrayList<>();
         for (Direction dir : exitsMap.keySet()) {
-            exitList.append(dir.toString()).append(" ");
+            exitList.add(dir.toString().toLowerCase());
         }
-        return exitList.toString().trim();
+        return exitList;
     }
 
     // Item management
