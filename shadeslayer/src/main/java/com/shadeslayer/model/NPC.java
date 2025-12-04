@@ -8,27 +8,29 @@ import java.util.function.Consumer;
 public class NPC implements Serializable {
     private final String name;
     private final String description;
-    private final List<String> dialogue;
     private final List<Item> inventory;
-    private final Consumer<Player> onTalk;
+    private DialogueTree dialogueTree;
     private final Consumer<Player> onAttack;
     private int health;
     private boolean isHostile;
 
-    public NPC(String name, String description, int health, boolean isHostile, 
-               Consumer<Player> onTalk, Consumer<Player> onAttack) {
+    public NPC(String name, String description, int health, boolean isHostile,
+            DialogueTree dialogueTree, Consumer<Player> onAttack) {
         this.name = name;
         this.description = description;
         this.health = health;
         this.isHostile = isHostile;
-        this.dialogue = new ArrayList<>();
         this.inventory = new ArrayList<>();
-        this.onTalk = onTalk;
+        this.dialogueTree = dialogueTree;
         this.onAttack = onAttack;
     }
 
     public NPC(String name, String description, int health, boolean isHostile) {
         this(name, description, health, isHostile, null, null);
+    }
+
+    public NPC(String name, String description, int health, boolean isHostile, DialogueTree dialogueTree) {
+        this(name, description, health, isHostile, dialogueTree, null);
     }
 
     public String getName() {
@@ -59,12 +61,16 @@ public class NPC implements Serializable {
         isHostile = hostile;
     }
 
-    public void addDialogue(String line) {
-        dialogue.add(line);
+    public DialogueTree getDialogueTree() {
+        return dialogueTree;
     }
 
-    public List<String> getDialogue() {
-        return new ArrayList<>(dialogue);
+    public void setDialogueTree(DialogueTree dialogueTree) {
+        this.dialogueTree = dialogueTree;
+    }
+
+    public boolean hasDialogue() {
+        return dialogueTree != null;
     }
 
     public void addItem(Item item) {
@@ -81,23 +87,41 @@ public class NPC implements Serializable {
 
     public boolean hasItem(String itemName) {
         return inventory.stream()
-            .anyMatch(item -> item.getName().equalsIgnoreCase(itemName));
+                .anyMatch(item -> item.getName().equalsIgnoreCase(itemName));
     }
 
     public Item getItemByName(String itemName) {
         return inventory.stream()
-            .filter(item -> item.getName().equalsIgnoreCase(itemName))
-            .findFirst()
-            .orElse(null);
+                .filter(item -> item.getName().equalsIgnoreCase(itemName)).findFirst().orElse(null);
     }
 
-    public void talk(Player player) {
-        if (onTalk != null) {
-            onTalk.accept(player);
-        } else if (!dialogue.isEmpty()) {
-            System.out.println(name + " says: " + dialogue.get(0));
-        } else {
-            System.out.println(name + " has nothing to say.");
+    public String talk(Player player) {
+        if (dialogueTree != null) {
+            DialogueNode currentNode = dialogueTree.getCurrentNode();
+            if (currentNode != null && currentNode.canEnter(player)) {
+                return currentNode.getText();
+            }
+        }
+        return name + " has nothing to say.";
+    }
+
+    public List<DialogueChoice> getDialogueChoices(Player player) {
+        if (dialogueTree != null) {
+            return dialogueTree.getAvailableChoices(player);
+        }
+        return new ArrayList<>();
+    }
+
+    public boolean selectDialogueChoice(int choiceIndex, Player player) {
+        if (dialogueTree != null) {
+            return dialogueTree.selectChoice(choiceIndex, player);
+        }
+        return false;
+    }
+
+    public void resetDialogue() {
+        if (dialogueTree != null) {
+            dialogueTree.reset();
         }
     }
 
