@@ -3,34 +3,27 @@ package com.shadeslayer.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class NPC implements Serializable {
     private final String name;
     private final String description;
     private final List<Item> inventory;
     private DialogueTree dialogueTree;
-    private final Consumer<Player> onAttack;
     private int health;
     private boolean isHostile;
 
     public NPC(String name, String description, int health, boolean isHostile,
-            DialogueTree dialogueTree, Consumer<Player> onAttack) {
+            DialogueTree dialogueTree) {
         this.name = name;
         this.description = description;
         this.health = health;
         this.isHostile = isHostile;
         this.inventory = new ArrayList<>();
         this.dialogueTree = dialogueTree;
-        this.onAttack = onAttack;
     }
 
     public NPC(String name, String description, int health, boolean isHostile) {
-        this(name, description, health, isHostile, null, null);
-    }
-
-    public NPC(String name, String description, int health, boolean isHostile, DialogueTree dialogueTree) {
-        this(name, description, health, isHostile, dialogueTree, null);
+        this(name, description, health, isHostile, null);
     }
 
     public String getName() {
@@ -122,14 +115,6 @@ public class NPC implements Serializable {
     public void resetDialogue() {
         if (dialogueTree != null) {
             dialogueTree.reset();
-        }
-    }
-
-    public void onAttacked(Player player) {
-        if (onAttack != null) {
-            onAttack.accept(player);
-        } else {
-            System.out.println(name + " takes damage!");
         }
     }
 

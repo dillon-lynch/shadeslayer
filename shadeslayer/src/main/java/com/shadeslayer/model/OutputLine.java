@@ -1,6 +1,8 @@
 package com.shadeslayer.model;
 
-public class OutputLine {
+import java.io.Serializable;
+
+public class OutputLine implements Serializable {
     private String text;
 
     public OutputLine(String text) {

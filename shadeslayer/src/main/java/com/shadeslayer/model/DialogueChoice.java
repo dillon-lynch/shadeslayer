@@ -7,7 +7,7 @@ public class DialogueChoice implements Serializable {
     private final String text;
     private final String targetNodeId;
     private final Runnable onSelect;
-    private final Predicate<Player> condition;
+    private final Predicate<Player> conditionToShow;
 
     public DialogueChoice(String text, String targetNodeId) {
         this(text, targetNodeId, null, null);
@@ -21,7 +21,7 @@ public class DialogueChoice implements Serializable {
         this.text = text;
         this.targetNodeId = targetNodeId;
         this.onSelect = onSelect;
-        this.condition = condition;
+        this.conditionToShow = condition;
     }
 
     public String getText() {
@@ -33,7 +33,7 @@ public class DialogueChoice implements Serializable {
     }
 
     public boolean isAvailable(Player player) {
-        return condition == null || condition.test(player);
+        return conditionToShow == null || conditionToShow.test(player);
     }
 
     public void onSelect() {

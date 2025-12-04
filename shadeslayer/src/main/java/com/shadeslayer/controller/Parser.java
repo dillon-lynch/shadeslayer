@@ -50,7 +50,7 @@ public final class Parser {
 
         String[] tokens = input.trim().split(" ");
         for (int i = 1; i < tokens.length; i++) {
-            arguments.add(tokens[i].toLowerCase());
+            arguments.add(tokens[i]);
         }
         return arguments;
     }

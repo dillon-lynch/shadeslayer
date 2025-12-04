@@ -41,6 +41,9 @@ public class ViewController extends Application implements GameView {
     private TextField commandInputField;
 
     @FXML
+    private javafx.scene.control.Button submitButton;
+
+    @FXML
     private VBox commandPalettesVBox;
 
     // SECTION: INPUT HANDLING
@@ -156,32 +159,56 @@ public class ViewController extends Application implements GameView {
             String commandName = command.getName();
             List<String> suggestions = Parser.getCommandArgumentSuggestions(command, player);
 
-            CommandPalette palette = new CommandPalette();
-            palette.setData(commandName.toUpperCase(), suggestions);
+            // If command takes no arguments, create a button instead of a palette
+            if (suggestions == null || suggestions.isEmpty()) {
+                javafx.scene.control.Button commandButton = new javafx.scene.control.Button(commandName.toUpperCase());
+                commandButton.setMaxWidth(Double.MAX_VALUE);
+                commandButton.getStyleClass().add("button");
 
-            // Add click handler for the TitledPane header (command name)
-            palette.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && event.getTarget() == palette) {
+                commandButton.setOnAction(event -> {
                     commandInputField.setText(commandName.toLowerCase());
                     commandInputField.requestFocus();
                     commandInputField.positionCaret(commandInputField.getText().length());
-                }
-            });
+                    // Automatically submit commands that take no arguments
+                    commandInputField.fireEvent(new javafx.scene.input.KeyEvent(
+                            javafx.scene.input.KeyEvent.KEY_PRESSED,
+                            "",
+                            "",
+                            javafx.scene.input.KeyCode.ENTER,
+                            false, false, false, false));
+                });
 
-            // Add click handler for the ListView items (arguments)
-            ListView<String> listView = palette.getListView();
-            if (listView != null) {
-                listView.setOnMouseClicked(event -> {
-                    String selectedArg = listView.getSelectionModel().getSelectedItem();
-                    if (selectedArg != null) {
-                        commandInputField.setText(commandName.toLowerCase() + " " + selectedArg.toLowerCase());
+                commandPalettesVBox.getChildren().add(commandButton);
+            } else {
+                // Create a CommandPalette for commands with arguments
+                CommandPalette palette = new CommandPalette();
+                palette.setData(commandName.toUpperCase(), suggestions);
+                palette.setExpanded(true); // Auto-expand
+
+                // Add click handler for the TitledPane header (command name)
+                palette.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 1 && event.getTarget() == palette) {
+                        commandInputField.setText(commandName.toLowerCase());
                         commandInputField.requestFocus();
                         commandInputField.positionCaret(commandInputField.getText().length());
                     }
                 });
-            }
 
-            commandPalettesVBox.getChildren().add(palette);
+                // Add click handler for the ListView items (arguments)
+                ListView<String> listView = palette.getListView();
+                if (listView != null) {
+                    listView.setOnMouseClicked(event -> {
+                        String selectedArg = listView.getSelectionModel().getSelectedItem();
+                        if (selectedArg != null) {
+                            commandInputField.setText(commandName.toLowerCase() + " " + selectedArg.toLowerCase());
+                            commandInputField.requestFocus();
+                            commandInputField.positionCaret(commandInputField.getText().length());
+                        }
+                    });
+                }
+
+                commandPalettesVBox.getChildren().add(palette);
+            }
         }
     }
 
@@ -200,10 +227,23 @@ public class ViewController extends Application implements GameView {
     }
 
     private Image loadIconFromPath(String imagePath) {
+        if (imagePath == null || imagePath.isEmpty()) {
+            return loadDefaultIcon();
+        }
         try {
-            return new Image(getClass().getResourceAsStream(imagePath));
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            return image;
         } catch (Exception e) {
-            System.err.println("Failed to load image: " + imagePath);
+            System.err.println("Failed to load image: " + imagePath + ", using default icon");
+            return loadDefaultIcon();
+        }
+    }
+
+    private Image loadDefaultIcon() {
+        try {
+            return new Image(getClass().getResourceAsStream("/icon.png"));
+        } catch (Exception e) {
+            System.err.println("Failed to load default icon");
             return null;
         }
     }
@@ -223,6 +263,17 @@ public class ViewController extends Application implements GameView {
                 commandInputField.clear();
             }
         });
+
+        // Wire up submit button
+        if (submitButton != null) {
+            submitButton.setOnAction(event -> {
+                String input = commandInputField.getText().trim();
+                if (!input.isEmpty()) {
+                    processUserCommand(input);
+                    commandInputField.clear();
+                }
+            });
+        }
     }
 
     private void processUserCommand(String input) {

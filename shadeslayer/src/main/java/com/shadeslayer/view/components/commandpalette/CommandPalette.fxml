@@ -4,12 +4,13 @@
 <?import javafx.scene.control.TitledPane?>
 
 <fx:root type="javafx.scene.control.TitledPane"
+         styleClass="titled-pane"
          xmlns="http://javafx.com/javafx/25" 
          xmlns:fx="http://javafx.com/fxml/1" 
          fx:controller="com.shadeslayer.view.components.commandpalette.CommandPaletteController"
          animated="false"
          expanded="false">
     <content>
-        <ListView fx:id="optionsList" prefHeight="100.0" />
+        <ListView fx:id="optionsList" prefHeight="70.0" maxHeight="150.0" />
     </content>
 </fx:root>

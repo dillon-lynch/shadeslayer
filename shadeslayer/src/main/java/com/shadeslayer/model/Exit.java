@@ -1,14 +1,13 @@
 package com.shadeslayer.model;
 
 import java.io.Serializable;
-import java.util.function.Predicate;
 
 public class Exit implements Serializable {
     private final Room targetRoom;
     private final String description;
-    private final Predicate<Player> canPassThrough;
+    private final SerializablePredicate<Player> canPassThrough;
 
-    public Exit(Room targetRoom, String description, Predicate<Player> canPassThrough) {
+    public Exit(Room targetRoom, String description, SerializablePredicate<Player> canPassThrough) {
         this.targetRoom = targetRoom;
         this.description = description;
         this.canPassThrough = canPassThrough;

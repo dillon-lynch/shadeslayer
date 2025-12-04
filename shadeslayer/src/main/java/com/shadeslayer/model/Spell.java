@@ -18,5 +18,5 @@ public abstract class Spell extends Usable {
     }
 
     @Override
-    public abstract void onUse(Player player);
+    public abstract String onUse(GameState gameState);
 }

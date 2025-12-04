@@ -9,11 +9,19 @@ public class Player implements Serializable {
     private Room currentRoom;
     private final List<Item> inventory;
     private final List<Spell> spells;
+    private int health;
+    private int maxHealth;
+    private int energy;
+    private int maxEnergy;
 
     public Player(String name) {
         this.name = name;
         this.inventory = new ArrayList<>();
         this.spells = new ArrayList<>();
+        this.maxHealth = 150; // Increased for balance
+        this.health = maxHealth;
+        this.maxEnergy = 100;
+        this.energy = maxEnergy;
     }
 
     public Player(String name, Room startingRoom) {
@@ -21,6 +29,10 @@ public class Player implements Serializable {
         this.currentRoom = startingRoom;
         this.inventory = new ArrayList<>();
         this.spells = new ArrayList<>();
+        this.maxHealth = 150; // Increased for balance
+        this.health = maxHealth;
+        this.maxEnergy = 100;
+        this.energy = maxEnergy;
     }
 
     public String getName() {
@@ -87,5 +99,73 @@ public class Player implements Serializable {
 
     public boolean knowsSpell(String name) {
         return getSpellByName(name) != null;
+    }
+
+    // Health management
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setHealth(int health) {
+        this.health = Math.max(0, Math.min(health, maxHealth));
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+    public void heal(int amount) {
+        health += amount;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    // Energy management
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = Math.max(0, Math.min(energy, maxEnergy));
+    }
+
+    public boolean hasEnergy(int amount) {
+        return energy >= amount;
+    }
+
+    public boolean consumeEnergy(int amount) {
+        if (energy >= amount) {
+            energy -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public void restoreEnergy(int amount) {
+        energy += amount;
+        if (energy > maxEnergy) {
+            energy = maxEnergy;
+        }
+    }
+
+    public void fullyRestore() {
+        health = maxHealth;
+        energy = maxEnergy;
     }
 }

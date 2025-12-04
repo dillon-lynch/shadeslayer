@@ -41,5 +41,5 @@ public abstract class Item extends Usable {
     }
 
     @Override
-    public abstract void onUse(Player player);
+    public abstract String onUse(GameState gameState);
 }

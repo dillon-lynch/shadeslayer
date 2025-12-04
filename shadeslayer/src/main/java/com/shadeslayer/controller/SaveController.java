@@ -20,8 +20,8 @@ import com.shadeslayer.model.SavePoint;
 
 public class SaveController {
     private static final String SAVE_DIRECTORY = "saves";
-    private static final String SAVE_FILE_PREFIX = "slot";
     private static final String SAVE_FILE_EXTENSION = ".sav";
+    private static final int MAX_SAVEPOINTS_PER_SLOT = 50; // Keep last 50 savepoints per slot
 
     public SaveController() {
         initializeSaveDirectory();
@@ -29,9 +29,18 @@ public class SaveController {
 
     private void initializeSaveDirectory() {
         try {
+            // Create main saves directory
             Path savePath = Paths.get(SAVE_DIRECTORY);
             if (!Files.exists(savePath)) {
                 Files.createDirectories(savePath);
+            }
+
+            // Create slot directories (1, 2, 3)
+            for (int slot = 1; slot <= 3; slot++) {
+                Path slotPath = Paths.get(SAVE_DIRECTORY, String.valueOf(slot));
+                if (!Files.exists(slotPath)) {
+                    Files.createDirectories(slotPath);
+                }
             }
         } catch (IOException e) {
             System.err.println("Failed to create save directory: " + e.getMessage());
@@ -50,20 +59,34 @@ public class SaveController {
 
         try {
             SavePoint savePoint = new SavePoint(saveSlot, gameState, saveName);
-            String fileName = generateFileName(saveSlot);
-            Path filePath = Paths.get(SAVE_DIRECTORY, fileName);
+            String fileName = generateFileName(savePoint.getTimestamp());
+            Path filePath = Paths.get(SAVE_DIRECTORY, String.valueOf(saveSlot), fileName);
 
             try (ObjectOutputStream oos = new ObjectOutputStream(
                     new FileOutputStream(filePath.toFile()))) {
                 oos.writeObject(savePoint);
             }
 
-            System.out.println("Game saved to slot " + saveSlot + " at " + savePoint.getTimestamp());
+            // Clean up old savepoints if we exceed the limit
+            cleanupOldSavepoints(saveSlot);
+
             return true;
 
         } catch (IOException e) {
             System.err.println("Failed to save game: " + e.getMessage());
             return false;
+        }
+    }
+
+    private void cleanupOldSavepoints(int saveSlot) {
+        List<SavePoint> saves = getSavesForSlot(saveSlot);
+        if (saves.size() > MAX_SAVEPOINTS_PER_SLOT) {
+            // Delete oldest savepoints
+            int toDelete = saves.size() - MAX_SAVEPOINTS_PER_SLOT;
+            for (int i = 0; i < toDelete; i++) {
+                SavePoint oldSave = saves.get(i);
+                deleteSave(saveSlot, oldSave.getTimestamp());
+            }
         }
     }
 
@@ -110,7 +133,7 @@ public class SaveController {
         }
 
         List<SavePoint> saves = new ArrayList<>();
-        Path slotDir = Paths.get(SAVE_DIRECTORY);
+        Path slotDir = Paths.get(SAVE_DIRECTORY, String.valueOf(saveSlot));
 
         try {
             if (!Files.exists(slotDir)) {
@@ -118,10 +141,9 @@ public class SaveController {
             }
 
             List<Path> files = Files.list(slotDir)
-                .filter(path -> path.getFileName().toString().matches(
-                    SAVE_FILE_PREFIX + saveSlot + "_.*\\" + SAVE_FILE_EXTENSION))
-                .sorted() // Sort files by name (timestamp)
-                .collect(Collectors.toList()); // Converts stream to list
+                    .filter(path -> path.getFileName().toString().endsWith(SAVE_FILE_EXTENSION))
+                    .sorted() // Sort files by name (timestamp)
+                    .collect(Collectors.toList()); // Converts stream to list
 
             for (Path file : files) {
                 try (ObjectInputStream ois = new ObjectInputStream(
@@ -154,14 +176,13 @@ public class SaveController {
 
     private void deleteNewerSaves(int saveSlot, LocalDateTime targetTimestamp) {
         List<SavePoint> saves = getSavesForSlot(saveSlot);
-        
+
         for (SavePoint save : saves) {
             if (save.getTimestamp().isAfter(targetTimestamp)) {
-                String fileName = generateFileName(saveSlot, save.getTimestamp());
-                Path filePath = Paths.get(SAVE_DIRECTORY, fileName);
+                String fileName = generateFileName(save.getTimestamp());
+                Path filePath = Paths.get(SAVE_DIRECTORY, String.valueOf(saveSlot), fileName);
                 try {
                     Files.deleteIfExists(filePath);
-                    System.out.println("Deleted newer save: " + save.getDisplayName());
                 } catch (IOException e) {
                     System.err.println("Failed to delete save: " + e.getMessage());
                 }
@@ -170,14 +191,11 @@ public class SaveController {
     }
 
     public boolean deleteSave(int saveSlot, LocalDateTime timestamp) {
-        String fileName = generateFileName(saveSlot, timestamp);
-        Path filePath = Paths.get(SAVE_DIRECTORY, fileName);
-        
+        String fileName = generateFileName(timestamp);
+        Path filePath = Paths.get(SAVE_DIRECTORY, String.valueOf(saveSlot), fileName);
+
         try {
             boolean deleted = Files.deleteIfExists(filePath);
-            if (deleted) {
-                System.out.println("Deleted save from slot " + saveSlot);
-            }
             return deleted;
         } catch (IOException e) {
             System.err.println("Failed to delete save: " + e.getMessage());
@@ -202,20 +220,16 @@ public class SaveController {
         return allDeleted;
     }
 
-    private String generateFileName(int saveSlot) {
-        return generateFileName(saveSlot, LocalDateTime.now());
-    }
-
-    private String generateFileName(int saveSlot, LocalDateTime timestamp) {
+    private String generateFileName(LocalDateTime timestamp) {
         String timestampStr = timestamp.toString()
-            .replace(":", "-")
-            .replace(".", "-");
-        return SAVE_FILE_PREFIX + saveSlot + "_" + timestampStr + SAVE_FILE_EXTENSION;
+                .replace(":", "-")
+                .replace(".", "-");
+        return timestampStr + SAVE_FILE_EXTENSION;
     }
 
     public void printSavesForSlot(int saveSlot) {
         List<SavePoint> saves = getSavesForSlot(saveSlot);
-        
+
         if (saves.isEmpty()) {
             System.out.println("No saves in slot " + saveSlot);
             return;
@@ -229,7 +243,7 @@ public class SaveController {
 
     public void printAllSaves() {
         Map<Integer, List<SavePoint>> allSaves = getAllSaves();
-        
+
         if (allSaves.isEmpty()) {
             System.out.println("No saves found");
             return;

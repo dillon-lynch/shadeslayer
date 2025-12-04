@@ -1,0 +1,278 @@
+/* Medieval Theme Stylesheet */
+
+/* Root color palette */
+.root {
+    -fx-base: #2b1f15;
+    -fx-background: #1a120c;
+    -fx-control-inner-background: #3d2f23;
+    -fx-accent: #8b6914;
+    -fx-focus-color: #c4941f;
+    -fx-faint-focus-color: #c4941f22;
+
+    /* Medieval color scheme */
+    -medieval-dark-brown: #1a120c;
+    -medieval-brown: #2b1f15;
+    -medieval-light-brown: #3d2f23;
+    -medieval-tan: #5a4632;
+    -medieval-gold: #c4941f;
+    -medieval-dark-gold: #8b6914;
+    -medieval-parchment: #e8dcc4;
+    -medieval-ink: #1a0f08;
+    -medieval-stone: #4a4440;
+    -medieval-rust: #8b4513;
+}
+
+/* Main BorderPane background */
+.border-pane {
+    -fx-background-color:
+        linear-gradient(to bottom, #2b1f15 0%, #1a120c 100%);
+}
+
+/* Text Area (Command Log) - Parchment style */
+.text-area {
+    -fx-background-color: #e8dcc4;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: #3d2f23;
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
+    -fx-padding: 10;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 2, 2);
+}
+
+.text-area .content {
+    -fx-background-color:
+        linear-gradient(to bottom, #f5ead0 0%, #e8dcc4 50%, #dac9a8 100%);
+    -fx-background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><filter id="noise"><feTurbulence baseFrequency="0.9" numOctaves="4" seed="0"/><feColorMatrix values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.03 0"/></filter></defs><rect width="200" height="200" filter="url(%23noise)"/></svg>');
+    -fx-padding: 5;
+    -fx-text-fill: #4a3020;
+    -fx-font-family: 'Segoe Print', 'Bradley Hand', 'Lucida Handwriting', 'Comic Sans MS', cursive;
+    -fx-font-size: 22px;
+    -fx-font-weight: 600;
+}
+
+.text-area {
+    -fx-text-fill: #4a3020;
+    -fx-font-family: 'Segoe Print', 'Bradley Hand', 'Lucida Handwriting', 'Comic Sans MS', cursive;
+    -fx-font-size: 22px;
+    -fx-font-weight: 600;
+}
+
+/* Text Field (Command Input) */
+.text-field {
+    -fx-background-color: #3d2f23;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #5a4632;
+    -fx-padding: 5;
+}
+
+.text-field:focused {
+    -fx-border-color: #c4941f;
+    -fx-background-color: #4a3a2d;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color:
+        linear-gradient(to bottom, #5a4632 0%, #3d2f23 50%, #2b1f15 100%);
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15 8 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 4, 0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color:
+        linear-gradient(to bottom, #6b5642 0%, #4d3f33 50%, #3b2f25 100%);
+    -fx-border-color: #c4941f;
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color:
+        linear-gradient(to bottom, #2b1f15 0%, #3d2f23 50%, #5a4632 100%);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 1);
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Section Headers */
+.section-header {
+    -fx-background-color:
+        linear-gradient(to bottom, #3d2f23 0%, #2b1f15 100%);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 0 0 2px 0;
+    -fx-text-fill: #c4941f;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 3, 0, 0, 1);
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: #3d2f23;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane>.viewport {
+    -fx-background-color: #2b1f15;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: #2b1f15;
+}
+
+/* ScrollBar */
+.scroll-bar {
+    -fx-background-color: #2b1f15;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color:
+        linear-gradient(to right, #5a4632 0%, #3d2f23 50%, #5a4632 100%);
+    -fx-background-insets: 2;
+    -fx-background-radius: 0;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 1px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color:
+        linear-gradient(to right, #6b5642 0%, #4d3f33 50%, #6b5642 100%);
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #3d2f23;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 1px;
+    -fx-padding: 3;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #c4941f;
+}
+
+/* VBox containers */
+.vbox {
+    -fx-background-color: #2b1f15;
+}
+
+/* TitledPane (Command Palettes) */
+.titled-pane {
+    -fx-background-color: transparent;
+}
+
+.titled-pane>.title {
+    -fx-background-color:
+        linear-gradient(to bottom, #4a3a2d 0%, #3d2f23 100%);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 8;
+}
+
+.titled-pane>.title>.text {
+    -fx-fill: #c4941f;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.titled-pane>.title:hover {
+    -fx-background-color:
+        linear-gradient(to bottom, #5a4a3d 0%, #4d3f33 100%);
+    -fx-cursor: hand;
+}
+
+.titled-pane>.content {
+    -fx-background-color: #3d2f23;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 0 2px 2px 2px;
+    -fx-border-style: solid;
+    -fx-padding: 0;
+}
+
+.titled-pane .arrow {
+    -fx-background-color: #c4941f;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: #3d2f23;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 12px;
+    -fx-padding: 6 8 6 8;
+    -fx-border-color: #2b1f15;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #4a3a2d;
+    -fx-cursor: hand;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color:
+        linear-gradient(to right, #5a4632 0%, #4a3a2d 50%, #5a4632 100%);
+    -fx-text-fill: #c4941f;
+}
+
+/* Inventory Item Container */
+.inventory-item {
+    -fx-background-color:
+        linear-gradient(to bottom, #3d2f23 0%, #2b1f15 100%);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-padding: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 3, 0, 1, 2);
+}
+
+.inventory-item .label {
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* HBox */
+.hbox {
+    -fx-background-color: #2b1f15;
+}

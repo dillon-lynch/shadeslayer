@@ -35,4 +35,8 @@ public class GameState implements Serializable {
     public void addOutput(OutputLine line) {
         outputHistory.add(line);
     }
+
+    public void clearOutput() {
+        outputHistory.clear();
+    }
 }
