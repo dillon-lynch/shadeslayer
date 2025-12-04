@@ -95,7 +95,7 @@ src/main/resources/
 
 ## Demo
 
-See the video walkthrough [here](INSERT_VIDEO_LINK)
+See the video walkthrough [here](https://github.com/dillon-lynch/shadeslayer/blob/main/GameOverviewVideo.mkv)
 
 ## Author
 
