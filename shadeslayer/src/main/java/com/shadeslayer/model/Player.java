@@ -1,14 +1,13 @@
 package com.shadeslayer.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Serializable {
     private final String name;
     private Room currentRoom;
-    private final List<Item> inventory;
-    private final List<Spell> spells;
+    private final Container<Item> inventory;
+    private final Container<Spell> spells;
     private int health;
     private int maxHealth;
     private int energy;
@@ -16,8 +15,8 @@ public class Player implements Serializable {
 
     public Player(String name) {
         this.name = name;
-        this.inventory = new ArrayList<>();
-        this.spells = new ArrayList<>();
+        this.inventory = new Container<>();
+        this.spells = new Container<>();
         this.maxHealth = 150; // Increased for balance
         this.health = maxHealth;
         this.maxEnergy = 100;
@@ -27,8 +26,8 @@ public class Player implements Serializable {
     public Player(String name, Room startingRoom) {
         this.name = name;
         this.currentRoom = startingRoom;
-        this.inventory = new ArrayList<>();
-        this.spells = new ArrayList<>();
+        this.inventory = new Container<>();
+        this.spells = new Container<>();
         this.maxHealth = 150; // Increased for balance
         this.health = maxHealth;
         this.maxEnergy = 100;
@@ -47,7 +46,6 @@ public class Player implements Serializable {
         this.currentRoom = room;
     }
 
-    // Inventory management
     public void addItem(Item item) {
         inventory.add(item);
     }
@@ -57,23 +55,17 @@ public class Player implements Serializable {
     }
 
     public Item getItemByName(String name) {
-        for (Item item : inventory) {
-            if (item.getName().equalsIgnoreCase(name)) {
-                return item;
-            }
-        }
-        return null;
+        return inventory.findByName(name);
     }
 
     public List<Item> getInventory() {
-        return new ArrayList<>(inventory);
+        return inventory.getAll();
     }
 
     public boolean hasItem(String name) {
-        return getItemByName(name) != null;
+        return inventory.contains(name);
     }
 
-    // Spell management
     public void learnSpell(Spell spell) {
         if (!spells.contains(spell)) {
             spells.add(spell);
@@ -85,20 +77,15 @@ public class Player implements Serializable {
     }
 
     public Spell getSpellByName(String name) {
-        for (Spell spell : spells) {
-            if (spell.getName().equalsIgnoreCase(name)) {
-                return spell;
-            }
-        }
-        return null;
+        return spells.findByName(name);
     }
 
     public List<Spell> getSpells() {
-        return new ArrayList<>(spells);
+        return spells.getAll();
     }
 
     public boolean knowsSpell(String name) {
-        return getSpellByName(name) != null;
+        return spells.contains(name);
     }
 
     // Health management
