@@ -276,3 +276,25 @@
 .hbox {
     -fx-background-color: #2b1f15;
 }
+/* Stats Panel */
+.stats-panel {
+    -fx-background-color:
+        linear-gradient(to bottom, #3d2f23 0%, #2b1f15 100%);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-style: solid;
+}
+
+.stat-label {
+    -fx-text-fill: #c4941f;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.stat-value {
+    -fx-text-fill: #e8dcc4;
+    -fx-font-family: 'Georgia', 'Times New Roman', serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}

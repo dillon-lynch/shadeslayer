@@ -46,6 +46,12 @@ public class ViewController extends Application implements GameView {
     @FXML
     private VBox commandPalettesVBox;
 
+    @FXML
+    private javafx.scene.control.Label healthLabel;
+
+    @FXML
+    private javafx.scene.control.Label energyLabel;
+
     // SECTION: INPUT HANDLING
 
     // Volatile to ensure its the most up-to-date value across threads
@@ -78,6 +84,8 @@ public class ViewController extends Application implements GameView {
     public void updateGameState(GameState gameState) {
         Player player = gameState.getPlayer();
 
+        updatePlayerStats(player);
+
         updateInventory(player.getInventory());
 
         updateSpells(player.getSpells());
@@ -105,6 +113,15 @@ public class ViewController extends Application implements GameView {
     }
 
     // SECTION: INTERNAL RENDERING METHODS
+
+    private void updatePlayerStats(Player player) {
+        if (healthLabel != null) {
+            healthLabel.setText(player.getHealth() + "/" + player.getMaxHealth());
+        }
+        if (energyLabel != null) {
+            energyLabel.setText(player.getEnergy() + "/" + player.getMaxEnergy());
+        }
+    }
 
     private void updateOutputLog(List<OutputLine> outputHistory) {
         if (commandLogArea == null) {
