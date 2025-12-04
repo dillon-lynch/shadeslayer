@@ -1,0 +1,8 @@
+CD into shadeslayer folder
+-> cd shadeslayer
+Generate the jar file
+-> java -jar target\shadeslayer-1.0-SNAPSHOT.jar
+Run the Jar File
+-> java -jar target\shadeslayer-1.0-SNAPSHOT.jar
+
+Then, select a save slot and enjoy through the rustic gui!
