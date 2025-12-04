@@ -8,7 +8,7 @@ public class ChronoSpell extends Spell {
     public ChronoSpell() {
         super("ChronoSpell",
                 "An instinctive magic that lets you rewind time to your last anchor point. The rune on your arm glows when you think of going back.",
-                "/icons/chrono.png",
+                "/icons/Chrnospell.png",
                 0); // No energy cost - it restores energy
     }
 

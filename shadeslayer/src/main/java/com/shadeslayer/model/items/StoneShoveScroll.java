@@ -10,7 +10,7 @@ public class StoneShoveScroll extends Item {
     public StoneShoveScroll() {
         super("Stone Shove Scroll",
                 "An ancient scroll inscribed with earth magic runes. Reading it will teach you the Stone Shove spell, allowing you to telekinetically move heavy objects and clear rubble.",
-                "/icons/scroll.png");
+                "/icons/Scroll.png");
     }
 
     @Override

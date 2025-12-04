@@ -8,7 +8,7 @@ public class IronShortblade extends Item {
     public IronShortblade() {
         super("Iron Shortblade",
                 "A proper guard's weapon with a double-edged blade and leather-wrapped hilt. The iron gleams with care, its edge honed to razor sharpness. This blade was forged for battle, not practice. Deals 15 damage per light attack (no energy cost) or 30 damage with a heavy strike (costs 10 energy). Highly durable.",
-                "/icons/iron_blade.png",
+                "/icons/IronShortblade.png",
                 100,
                 100);
     }

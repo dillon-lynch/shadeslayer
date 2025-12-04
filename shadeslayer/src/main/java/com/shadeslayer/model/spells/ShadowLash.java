@@ -8,7 +8,7 @@ public class ShadowLash extends Spell {
     public ShadowLash() {
         super("Shadow Lash",
                 "A whip of dark fire springs from your hand, striking with burning force.",
-                "/icons/shadow_lash.png",
+                "/icons/Scroll.png",
                 20);
     }
 

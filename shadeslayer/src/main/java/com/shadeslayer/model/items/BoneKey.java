@@ -8,7 +8,7 @@ public class BoneKey extends Item {
     public BoneKey() {
         super("Bone Key",
                 "A key carved from yellowed bone, etched with runes. It thrums with dark magic.",
-                "/icons/bone_key.png",
+                "/icons/BoneKey.png",
                 1,
                 1);
     }

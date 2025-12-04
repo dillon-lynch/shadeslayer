@@ -8,7 +8,7 @@ public class StoneShove extends Spell {
     public StoneShove() {
         super("Stone Shove",
                 "You command stone to remember its shape and shift. Rubble clears, pathways open.",
-                "/icons/stone_shove.png",
+                "/icons/StoneShove.png",
                 15);
     }
 

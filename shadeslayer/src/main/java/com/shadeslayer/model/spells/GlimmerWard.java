@@ -8,7 +8,7 @@ public class GlimmerWard extends Spell {
     public GlimmerWard() {
         super("Glimmer Ward",
                 "A soft light springs from your palm, forming a protective shimmer. It reveals hidden things and shields against minor magic.",
-                "/icons/glimmer_ward.png",
+                "/icons/GlimmerWard.png",
                 10);
     }
 
